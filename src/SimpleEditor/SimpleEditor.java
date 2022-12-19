@@ -41,16 +41,16 @@ public class SimpleEditor extends JFrame {
         menu.add(Cancel);
         menu.add(Exit);
 
-        Open.addActionListener(e -> ActionOpen());
-        Save.addActionListener(e -> ActionSave());
-        Cancel.addActionListener(e -> ActionCancel());
-        Exit.addActionListener(e -> System.exit(0));
+        Open.addActionListener(e -> actionOpen());
+        Save.addActionListener(e -> actionSave());
+        Cancel.addActionListener(e -> actionCancel());
+        Exit.addActionListener(e -> actionExit());
 
         setVisible(true);
 
     }
 
-    public void ActionOpen() {
+    public void actionOpen() {
         JFileChooser chooser = new JFileChooser();
         chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
         int res = chooser.showOpenDialog(this);
@@ -68,12 +68,21 @@ public class SimpleEditor extends JFrame {
         }
     }
 
-    public void ActionSave() {
+    public void actionSave() {
         fileEdit.saveFile(text.getText());
     }
-    public void ActionCancel() {
+    public void actionCancel() {
         fileEdit.file = null;
         text.setText(null);
+    }
+
+    public void actionExit() {
+        int res = JOptionPane.showConfirmDialog(this,"Сохранить файл?","Save",JOptionPane.YES_NO_OPTION);
+        if(res == JOptionPane.OK_OPTION) {
+            fileEdit.saveFile(text.getText());
+            System.exit(0);
+        } else { System.exit(0);
+        }
     }
 
 }
